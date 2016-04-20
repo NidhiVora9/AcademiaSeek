@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+        <script src="load.js" type="text/javascript"></script>
+		<script src="search.js" type="text/javascript"></script>
+        <script src="https://apis.google.com/js/client.js?onload=onClientLoad" type="text/javascript"></script>
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+		<div class="jumbotron text-center">
+		<label> <input id="query" type="text" required ><button id="search-button" type="button" class="btn btn-info btn-md" onclick="search()">Search</button></label>
+		<br><br>
+		<button type="button" class="btn btn-danger">Books</button>
+		<button type="button" class="btn btn-primary">Videos</button>
+		<button type="button" class="btn btn-success">Blogs</button>
+		<button type="button" class="btn btn-warning">Tutorials</button>
+		</div>
+			
+	</body>
+</html>
