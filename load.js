@@ -17,12 +17,24 @@ function onYouTubeIframeAPIReady() {
            return; 
 
 	for(var i = 0; i < playerArr.length;i++) {
+		  var header=document.createElement('h3');
+		  header.innerHTML=playerArr[i].snippet.title;
+		  document.body.appendChild(header);
+		  var paragraph=document.createElement('p');
+		  paragraph.innerHTML=playerArr[i].snippet.description;
+		  document.body.appendChild(paragraph);
 		  var div = document.createElement('div');
 		  document.body.appendChild(div);
 		  div.id = "player"+i;
 		  div.class="player";
+		  div.style.width="350px"
+		  div.style.height="350px"
+		  div.style.display="block"
+		  div.style.padding="2%"
 		  playerId=div.id;
-		  var curplayer = createPlayer(playerArr[i],playerId);
+		  console.log("width:"+div.style.width+" height:"+div.style.height)
+		  var curplayer = createPlayer(playerArr[i],playerId); 
+		  
         } 
 }
 

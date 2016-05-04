@@ -1,6 +1,7 @@
 function showResponse(response) {
 	var responseString = JSON.stringify(response, '', 2);
     /* var data=document.getElementById('response').innerHTML += responseString; */
+    console.log(responseString)
 	LoadVideos(response);
 }
 
