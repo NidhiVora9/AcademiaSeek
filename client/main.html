@@ -1,0 +1,27 @@
+<head>
+  <title>simple</title>
+   <script src="https://apis.google.com/js/client.js?onload=onClientLoad" type="text/javascript"></script>
+</head>
+
+<body>
+{{> header_search}}
+<div id="container-fluid text-center">
+<table  class="table" id="booksTable">
+
+</table>
+</div>
+</body>
+
+<template name="header_search">
+  <div class="jumbotron text-center">
+    <label> <input id="query" type="text" required></label>
+    <br>
+    <button type="button" id="books" class="btn btn-danger books">Books</button>
+    <button type="button" class="btn btn-primary videos">Videos</button>
+    <button type="button" class="btn btn-success ">Blogs</button>
+    <button type="button" class="btn btn-warning">Tutorials</button>
+    </div>
+    <span id="error"></span>
+    
+
+</template>
