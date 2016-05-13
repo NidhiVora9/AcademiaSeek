@@ -25,24 +25,21 @@ if(Meteor.isClient) {
   	 	if(typeof playerArr === 'undefined')
            return; 
        	for(var i = 0; i < playerArrlength;i++) {
-		  var header=document.createElement('h3');
-		  header.innerHTML=playerArr[i].snippet.title;
-		  document.body.appendChild(header);
-		  var paragraph=document.createElement('p');
-		  paragraph.innerHTML=playerArr[i].snippet.description;
-		  document.body.appendChild(paragraph);
-		  var div = document.createElement('div');
-		  document.body.appendChild(div);
-		  div.id = "player"+i;
+       	  var div = document.createElement('div');
+		  $('#displayData').append(div);
 		  div.class="player";
+		  div.id = "player"+i;
 		  div.style.width="350px"
 		  div.style.height="350px"
 		  div.style.display="block"
 		  div.style.padding="2%"
 		  playerId=div.id;
-		  console.log("width:"+div.style.width+" height:"+div.style.height)
 		  var curplayer = createPlayer(playerArr[i],playerId); 
-		  
+       	  tr = $('<tr/>');
+       	  tr.append("<td>"+curplayer+"</td>");
+       	  tr.append("<td><h3>"+playerArr[i].snippet.title+"</h3></td>");
+       	  tr.append("<td><p>"+playerArr[i].snippet.description+"</p></td>");  
+       	  $('#displayData').append(tr);
         } 
   	 };
 
@@ -81,15 +78,14 @@ function loadBooks(response)
 	trh.append("<th></th>");
 	trh.append("<th>Book Name</th>");
 	trh.append("<th>Average Ratings</th>");
-	$('#booksTable').append(trh);
+	$('#displayData').append(trh);
   	$.each(books,function(index,item){
   		 tr = $('<tr/>');
   		 tr.append("<td><img src='" +item.best_book[0].small_image_url[0]+"'/></td>");	
   		 tr.append("<td><h4>" +item.best_book[0].title[0] + "</h4><br>by "+item.best_book[0].author[0].name[0]+"</td>");
   		 tr.append("<td><h5>" +item.average_rating/* + "</h5><br>published in "
   		 	+item.original_publication_year[0]._*/+"</h5></td>");
-  		 tr.append("<hr>");
-  		 $('#booksTable').append(tr);
+  		 $('#displayData').append(tr);
    		 console.log(item.best_book[0].title[0]);
   	});
  	}
@@ -97,7 +93,7 @@ function loadBooks(response)
 	{
 		tr = $('<tr/>');
 		tr.append("<td><h3 align='center'>" +"Books not found"+ "</h3></td>");
-		$("#booksTable").append(tr);
+		$("#displayData").append(tr);
 	}
 
 }
