@@ -25,34 +25,29 @@ if(Meteor.isClient) {
   	 	if(typeof playerArr === 'undefined')
            return; 
        	for(var i = 0; i < playerArrlength;i++) {
-       	  var div = document.createElement('div');
-		  $('#displayData').append(div);
-		  div.class="player";
-		  div.id = "player"+i;
-		  div.style.width="350px"
-		  div.style.height="350px"
-		  div.style.display="block"
-		  div.style.padding="2%"
-		  playerId=div.id;
-		  var curplayer = createPlayer(playerArr[i],playerId); 
+       	  console.log(playerArr[i]);
+		  playerId="player"+i;	  
        	  tr = $('<tr/>');
-       	  tr.append("<td>"+curplayer+"</td>");
-       	  tr.append("<td><h3>"+playerArr[i].snippet.title+"</h3></td>");
-       	  tr.append("<td><p>"+playerArr[i].snippet.description+"</p></td>");  
+       	  tr.append("<td ><div id='"+playerId+"'></div></td>");
+       	  tr.append("<td><h4>"+playerArr[i].snippet.title+"</h4><br>"+playerArr[i].snippet.channelTitle+"</td>");
+       	  tr.append("<td><p>"+playerArr[i].snippet.description+"</p></td>"); 
        	  $('#displayData').append(tr);
+       	  var curplayer = createPlayer(playerArr[i],playerId); 
         } 
   	 };
 
 }
 function createPlayer(playerArr,playerId) {
+		console.log(playerArr.id.videoId);
           return new YT.Player(playerId, {
              height: playerArr.snippet.thumbnails.medium.height,
              width: playerArr.snippet.thumbnails.medium.width,
-			 playerVars: 
+             videoId:playerArr.id.videoId
+			/* playerVars: 
 			{
-            listType:'playlist',
+            listType:'video',
             list: playerArr.id.playlistId
-			}          
+			}  */        
           });
       }
 

@@ -13,11 +13,11 @@ Meteor.methods({
         var fut = new Future();
         YoutubeApi.search.list({
            part:'snippet',
-           q: search,
            order:'viewCount',
-           relevanceLanguage:'en',
-           type:'playlist',
-           maxResults:'10'
+           type:'video',
+           q: search,  
+           videoCategoryId:'27',      
+           maxResults:'30',
         }, function (err, data) {
             var responseString = JSON.stringify(data, '', 2);
             fut.return(data);
