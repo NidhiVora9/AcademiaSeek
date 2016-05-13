@@ -17,12 +17,13 @@ Meteor.methods({
            type:'video',
            q: search,  
            videoCategoryId:'27',      
-           maxResults:'30',
+           maxResults:'10'
         }, function (err, data) {
             var responseString = JSON.stringify(data, '', 2);
             fut.return(data);
             return data; 
         });
+
         return fut.wait();
     },
     searchBooks:function(search){

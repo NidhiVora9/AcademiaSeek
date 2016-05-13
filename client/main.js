@@ -1,11 +1,25 @@
 var playerArr=[];
+Session.setDefault('searching', false);
 
 if(Meteor.isClient) {
 	var tag = document.createElement('script');
 	tag.src = "https://www.youtube.com/iframe_api";
 	var firstScriptTag = document.getElementsByTagName('script')[0];
 	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
 	Template.header_search.events = {
+	'click .search':function(){
+		var q =document.getElementById('query').value;	
+		if (query)
+      		{Session.set('query', q);}
+		Meteor.call('searchVideos',q,function(err, response) {
+			loadVideos(response);
+		});
+		Meteor.call('searchBooks',q,function(err, response) {
+			loadBooks(response);
+		});
+	},
+
     'click .videos' : function () {
     	var q =document.getElementById('query').value;	
 		Meteor.call('searchVideos',q,function(err, response) {
@@ -38,7 +52,6 @@ if(Meteor.isClient) {
 
 }
 function createPlayer(playerArr,playerId) {
-		console.log(playerArr.id.videoId);
           return new YT.Player(playerId, {
              height: playerArr.snippet.thumbnails.medium.height,
              width: playerArr.snippet.thumbnails.medium.width,
@@ -53,22 +66,34 @@ function createPlayer(playerArr,playerId) {
 
 function loadVideos(response)
 {
+	playerArr=[];
+	$("#displayData tr").remove();
+	$("#container-fluid").empty();
 	var Searchitems=response.items;  
+	if(typeof Searchitems!=='undefined')
+	{
 	$.each(Searchitems, function(index, item){
 		playerArr.push(item);
 	});	
 	onYouTubeIframeAPIReady();
+	}
+	else{
+		tr = $('<tr/>');
+		tr.append("<td><h3 align='center'>" +"Videos not found"+ "</h3></td>");
+		$("#displayData").append(tr);
+	}
 }
 
 function loadBooks(response)
 {
-	console.log(response);
+	$("#displayData tr").remove();
+	$("#container-fluid").empty();
 	var books=response.GoodreadsResponse.search[0].results[0].work;
+	if(typeof books!=='undefined')
+	{
 	books.sort(function(obj1,obj2){
 		return obj2.average_rating - obj1.average_rating;
 	});
-	if(typeof books!=='undefined')
-	{
 	trh= $('<tr/>');
 	trh.append("<th></th>");
 	trh.append("<th>Book Name</th>");

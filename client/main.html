@@ -7,14 +7,13 @@
 {{> header_search}}
 <div id="container-fluid text-center">
 <table  class="table" id="displayData">
-
 </table>
 </div>
 </body>
 
 <template name="header_search">
   <div class="jumbotron text-center">
-    <label> <input id="query" type="text" required></label>
+    <label> <input id="query" type="text" required><button id="search-button" type="button" class="btn btn-info btn-md search">Search</button></label>
     <br>
     <button type="button" id="books" class="btn btn-danger books">Books</button>
     <button type="button" class="btn btn-primary videos">Videos</button>
