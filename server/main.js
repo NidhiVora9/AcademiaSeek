@@ -1,10 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 Meteor.startup(function() {
     var key=Meteor.settings.public.YouTubeApikey;
-	YoutubeApi.authenticate({
+    YoutubeApi.authenticate({
     type: 'key',
     key: key
-	});
+    });
 });
 
 Meteor.methods({
