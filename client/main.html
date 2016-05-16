@@ -6,19 +6,29 @@
 <body>
 {{> header_search}}
 <div id="container-fluid text-center">
-<table  class="table" id="displayData">
-</table>
+  <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#displayBooks">Books</a></li>
+      <li><a data-toggle="tab" href="#displayVideos">Videos</a></li>
+      <li><a data-toggle="tab" href="#displayVideos">Blogs</a></li>
+      <li><a data-toggle="tab" href="#displayVideos">Tutorials</a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="displayBooks" class="tab-pane fade in active">
+      <table  class="table" id="displaybooksData">
+      </table>
+    </div>
+    <div id="displayVideos" class="tab-pane fade in active">
+      <table  class="table" id="displayvideosData">
+      </table>
+    </div> 
+  </div>
 </div>
+
 </body>
 
 <template name="header_search">
   <div class="jumbotron text-center">
     <label> <input id="query" type="text" required><button id="search-button" type="button" class="btn btn-info btn-md search">Search</button></label>
-    <br>
-    <button type="button" id="books" class="btn btn-danger books">Books</button>
-    <button type="button" class="btn btn-primary videos">Videos</button>
-    <button type="button" class="btn btn-success ">Blogs</button>
-    <button type="button" class="btn btn-warning">Tutorials</button>
     </div>
     <span id="error"></span>
     

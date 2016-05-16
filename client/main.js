@@ -6,48 +6,36 @@ if(Meteor.isClient) {
 	tag.src = "https://www.youtube.com/iframe_api";
 	var firstScriptTag = document.getElementsByTagName('script')[0];
 	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
 	Template.header_search.events = {
 	'click .search':function(){
 		var q =document.getElementById('query').value;	
-		if (query)
-      		{Session.set('query', q);}
-		Meteor.call('searchVideos',q,function(err, response) {
-			loadVideos(response);
-		});
 		Meteor.call('searchBooks',q,function(err, response) {
 			loadBooks(response);
 		});
-	},
-
-    'click .videos' : function () {
-    	var q =document.getElementById('query').value;	
 		Meteor.call('searchVideos',q,function(err, response) {
 			loadVideos(response);
-		});
-    },
-    'click .books':function(){
-    	console.log("clicked books");
-    	var q =document.getElementById('query').value;	
-    	Meteor.call('searchBooks',q,function(err, response) {
-			loadBooks(response);
-		});
-    }
+		});	
+	}
   };
   	onYouTubeIframeAPIReady = function () {
-  		playerArrlength=playerArr.length;
+  		try{
+  			playerArrlength=playerArr.length;
   	 	if(typeof playerArr === 'undefined')
            return; 
        	for(var i = 0; i < playerArrlength;i++) {
-       	  console.log(playerArr[i]);
 		  playerId="player"+i;	  
        	  tr = $('<tr/>');
        	  tr.append("<td ><div id='"+playerId+"'></div></td>");
        	  tr.append("<td><h4>"+playerArr[i].snippet.title+"</h4><br>"+playerArr[i].snippet.channelTitle+"</td>");
        	  tr.append("<td><p>"+playerArr[i].snippet.description+"</p></td>"); 
-       	  $('#displayData').append(tr);
+       	  $('#displayvideosData').append(tr);
        	  var curplayer = createPlayer(playerArr[i],playerId); 
         } 
+  		}
+  		catch(e){
+  			throw e;
+  		}
+  		
   	 };
 
 }
@@ -55,20 +43,14 @@ function createPlayer(playerArr,playerId) {
           return new YT.Player(playerId, {
              height: playerArr.snippet.thumbnails.medium.height,
              width: playerArr.snippet.thumbnails.medium.width,
-             videoId:playerArr.id.videoId
-			/* playerVars: 
-			{
-            listType:'video',
-            list: playerArr.id.playlistId
-			}  */        
+             videoId:playerArr.id.videoId       
           });
       }
 
 function loadVideos(response)
 {
 	playerArr=[];
-	$("#displayData tr").remove();
-	$("#container-fluid").empty();
+	$("#displayvideosData tr").remove();
 	var Searchitems=response.items;  
 	if(typeof Searchitems!=='undefined')
 	{
@@ -80,15 +62,15 @@ function loadVideos(response)
 	else{
 		tr = $('<tr/>');
 		tr.append("<td><h3 align='center'>" +"Videos not found"+ "</h3></td>");
-		$("#displayData").append(tr);
+		$("#displayvideosData").append(tr);
 	}
 }
 
 function loadBooks(response)
 {
-	$("#displayData tr").remove();
-	$("#container-fluid").empty();
+	$("#displaybooksData tr").remove();
 	var books=response.GoodreadsResponse.search[0].results[0].work;
+	console.log(books);
 	if(typeof books!=='undefined')
 	{
 	books.sort(function(obj1,obj2){
@@ -98,22 +80,26 @@ function loadBooks(response)
 	trh.append("<th></th>");
 	trh.append("<th>Book Name</th>");
 	trh.append("<th>Average Ratings</th>");
-	$('#displayData').append(trh);
+	$('#displaybooksData').append(trh);
   	$.each(books,function(index,item){
+  		 var average_rating=0.0;
+  		 if(item.average_rating>0.0)
+  		 {
+  		 	average_rating=item.average_rating;
+  		 }
   		 tr = $('<tr/>');
   		 tr.append("<td><img src='" +item.best_book[0].small_image_url[0]+"'/></td>");	
   		 tr.append("<td><h4>" +item.best_book[0].title[0] + "</h4><br>by "+item.best_book[0].author[0].name[0]+"</td>");
-  		 tr.append("<td><h5>" +item.average_rating/* + "</h5><br>published in "
+  		 tr.append("<td><h5>" +average_rating/* + "</h5><br>published in "
   		 	+item.original_publication_year[0]._*/+"</h5></td>");
-  		 $('#displayData').append(tr);
-   		 console.log(item.best_book[0].title[0]);
+  		 $('#displaybooksData').append(tr);
   	});
  	}
   	else
 	{
 		tr = $('<tr/>');
 		tr.append("<td><h3 align='center'>" +"Books not found"+ "</h3></td>");
-		$("#displayData").append(tr);
+		$("#displaybooksData").append(tr);
 	}
 
 }
